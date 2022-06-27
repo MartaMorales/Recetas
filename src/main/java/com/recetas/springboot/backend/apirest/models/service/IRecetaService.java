@@ -2,6 +2,7 @@ package com.recetas.springboot.backend.apirest.models.service;
 
 import com.recetas.springboot.backend.apirest.models.entity.Receta;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface IRecetaService {
     ResponseEntity<Receta> editar (Receta receta);
 
     ResponseEntity eliminar (int id);
+
+    ResponseEntity<List<Receta>> buscarRecetaNombre (String nombre, String nombreAutor, String apellidos);
 }

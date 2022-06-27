@@ -2,12 +2,14 @@ package com.recetas.springboot.backend.apirest.models.service;
 
 import com.recetas.springboot.backend.apirest.models.dao.IRecetaDao;
 import com.recetas.springboot.backend.apirest.models.entity.Receta;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -64,5 +66,15 @@ public class RecetaServiceImpl implements IRecetaService {
     public ResponseEntity eliminar(int id) {
         recetaDao.deleteById(id);
         return ResponseEntity.ok("Se ha borrado la receta");
+    }
+
+    @Override
+    public ResponseEntity<List<Receta>> buscarRecetaNombre(String nombre, String nombreAutor, String apellidos) {
+
+                List<Receta> recetas =
+                        recetaDao.findByNombreLikeOrAutorNombreLikeOrAutorApellidosLike(nombre, nombreAutor, apellidos);
+        if(CollectionUtils.isEmpty(recetas))
+            throw new EntityNotFoundException();
+        return ResponseEntity.ok(recetas);
     }
 }

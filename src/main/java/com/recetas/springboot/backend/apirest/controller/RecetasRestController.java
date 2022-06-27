@@ -65,4 +65,13 @@ public class RecetasRestController {
         return recetaService.eliminar(id);
     }
 
+
+    //Busqueda por nombre receta o nombreAutor o nombre y apellidos del autor
+    @GetMapping
+    public ResponseEntity<List<Receta>> buscarRecetaNombre (@RequestParam (value = "nombre", required = false) String nombre,
+                                                            @RequestParam (value = "nombreAutor",required = false) String nombreAutor,
+                                                            @RequestParam (value = "apellidos", required = false) String apellidos){
+        return recetaService.buscarRecetaNombre(nombre, nombreAutor, apellidos);
+    }
+
 }
